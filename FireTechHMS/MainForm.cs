@@ -18,10 +18,12 @@ namespace FireTechHMS
     {
         public static string s_id;
         public static string r_id;
+        public static string stf_id;
         public static string r_sts;  // testing
         public static int add_sts;
         public static int up_sts;
         public static int roomAdd_sts;
+        public static int srvAdd_sts;
         public static int roomUp_sts;
 
         public MainForm()
@@ -352,6 +354,7 @@ namespace FireTechHMS
                 if (dsts == 1)
                 {
                     new MessageContainer("Room Record Deleted !").Show();
+                    addRoomData();
                 }
                 else
                 {
@@ -422,6 +425,34 @@ namespace FireTechHMS
             }
         }
 
-        
+        private void btnAddService_Click(object sender, EventArgs e)
+        {
+            AddStaff addStaff = new AddStaff();
+            addStaff.ShowDialog();
+            if (srvAdd_sts == 1)
+            {
+                addstaff();
+                srvAdd_sts = 0;
+            }
+        }
+
+        private void btnDeleteService_Click(object sender, EventArgs e)
+        {
+            stf_id = $"{servicegrid.CurrentRow.Cells[0].Value.ToString()}";
+            if (stf_id != null)
+            {
+                int dsts = DeleteRecord.Delete(id: stf_id, table: "staff", idField: "staff_id");
+
+                if (dsts == 1)
+                {
+                    new MessageContainer("Room Record Deleted !").Show();
+                    addstaff();
+                }
+                else
+                {
+                    new MessageContainer("Something Went Wrong").Show();
+                }
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace FireTechHMS.Assets
 {
     internal class SQLiteConn
     {
-        private SQLiteConnection conn = new SQLiteConnection("Data Source=../Database/hms_db.db; Version = 3; New = True; Compress = True; ");
+        private SQLiteConnection conn = new SQLiteConnection("Data Source=./Database/hms_db.db; Version = 3; New = True; Compress = True; ");
 
         // Data Source=D:\\Projects\\C#\\Visual Studio\\Databases\\hms_db.db; Version = 3; New = True; Compress = True; 
 

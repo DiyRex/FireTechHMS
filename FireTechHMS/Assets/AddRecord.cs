@@ -110,5 +110,65 @@ namespace FireTechHMS.Assets
                 return 1;
             }
         }
+
+
+        public static int addService(string FirstName, string LastName, string Address, string NIC, string role, string ContactNumber)
+        {
+            int getRole(string s_role)
+            {
+                switch (s_role)
+                {
+                    case "Warden":
+                        return 1;
+                    case "Cleaner":
+                        return 2;
+                    case "Supervisor":
+                        return 3;
+                    case "Cook":
+                        return 4;
+                    case "Security":
+                        return 5;
+                    default: return 0;
+                }
+            }
+            SQLiteConn conn = new SQLiteConn();
+            conn.openConnection();
+            string update_str = @"INSERT INTO `staff` (`staff_id`, `firstname`, `lastname`, `address`, `nic`, `contact`, `role`, `added_at`)
+                VALUES 
+                (
+                 NULL,
+                @FstName,
+                @LstName,
+                @Address,
+                @NIC,
+                @ContactNumber,
+                @role,
+                @AddedAt
+                );";
+            DateTime p = DateTime.Now;
+            string endDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            SQLiteCommand command = new SQLiteCommand();
+            command.Connection = conn.getConnection;
+            command.CommandText = update_str;
+            command.Parameters.AddWithValue("@FstName", FirstName);
+            command.Parameters.AddWithValue("@LstName", LastName);
+            command.Parameters.AddWithValue("@Address", Address);
+            command.Parameters.AddWithValue("@NIC", NIC);
+            command.Parameters.AddWithValue("@ContactNumber", ContactNumber);
+            command.Parameters.AddWithValue("@role", getRole(role).ToString());
+            command.Parameters.AddWithValue("@AddedAt", endDate);
+            int sts = command.ExecuteNonQuery();
+
+            conn.closeConnection();
+            if (sts == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
     }
 }
